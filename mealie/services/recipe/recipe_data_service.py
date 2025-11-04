@@ -146,7 +146,9 @@ class RecipeDataService(BaseService):
 
         async with AsyncClient(transport=AsyncSafeTransport()) as client:
             try:
-                r = await client.get(image_url_str, headers={"User-Agent": user_agent})
+                r = await client.get(
+                    image_url_str, headers={"User-Agent": user_agent}, follow_redirects=True, timeout=15.0
+                )
             except Exception:
                 self.logger.exception("Fatal Image Request Exception")
                 return None
